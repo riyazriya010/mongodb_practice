@@ -3,10 +3,12 @@
 
 
 // Create a MongoClient instance and connect to your MongoDB server.
+const { configure } = require('dotenv')
+configure()
 const { MongoClient } = require("mongodb");
 
 async function main() {
-    const uri = "mongodb://localhost:27017/";
+    const uri = process.env.MONGO_URI;
     const client = new MongoClient(uri);
 
     try {
@@ -17,7 +19,7 @@ async function main() {
         session.startTransaction();
 
         // Use the session object to perform multiple operations
-        const database = client.db("testdb");
+        const database = client.db(process.env.DB_NAME);
         const collection1 = database.collection("collection1");
         const collection2 = database.collection("collection2");
 
